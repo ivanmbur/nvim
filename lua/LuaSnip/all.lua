@@ -13,7 +13,7 @@ return {
     end),
   }),
   s("bigeq", {
-    t({ "\\begin{equation}", "  " }),
+    t({ "\\begin{equation}", "    " }),
     i(1),
     t({ "", "\\end{equation}" }),
   }),
