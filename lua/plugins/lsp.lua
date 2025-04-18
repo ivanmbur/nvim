@@ -74,11 +74,8 @@ return {
                     ["<C-n>"] = cmp.mapping.select_next_item(),
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
                     ["<Tab>"] = cmp.mapping(function(fallback)
-                        local copilot_suggestion = vim.fn["copilot#GetDisplayedSuggestion"]
                         if luasnip.expand_or_jumpable() then
                             luasnip.expand_or_jump()
-                        elseif copilot_suggestion ~= "" then
-                            vim.fn.feedkeys(vim.fn["copilot#Accept"](), "")
                         elseif cmp.visible() then
                             cmp.select_next_item()
                         else
