@@ -3,11 +3,13 @@ local s = ls.snippet
 local t = ls.text_node
 local f = ls.function_node
 local i = ls.insert_node
+local d = ls.dynamic_node  -- Add this
+local sn = ls.snippet_node -- Add this
 
 return {
 
   -- Dynamic mathcal snippet: cA -> \mathcal{A}
-  s({ trig = "c(%u)", regTrig = true, wordTrig = false }, {
+  s({ trig = "c(%u)", regTrig = true, wordTrig = false, snippetType = "autosnippet"}, {
     f(function(_, snip)
       return "\\mathcal{" .. snip.captures[1] .. "}"
     end),
@@ -17,31 +19,49 @@ return {
     i(1),
     t({ "", "\\end{equation}" }),
   }),
-  s(";a", t("\\alpha")),
-  s(";b", t("\\beta")),
-  s(";g", t("\\gamma")),
-  s(";d", t("\\delta")),
-  s(";e", t("\\epsilon")),
-  s(";z", t("\\zeta")),
-  s(";h", t("\\eta")),
-  s(";t", t("\\theta")),
-  s(";k", t("\\kappa")),
-  s(";l", t("\\lambda")),
-  s(";m", t("\\mu")),
-  s(";n", t("\\nu")),
-  s(";x", t("\\xi")),
-  s(";p", t("\\pi")),
-  s(";r", t("\\rho")),
-  s(";s", t("\\sigma")),
-  s(";f", t("\\phi")),
-  s(";c", t("\\chi")),
-  s(";o", t("\\omega")),
-  s(";D", t("\\Delta")),
-  s(";T", t("\\Theta")),
-  s(";L", t("\\Lambda")),
-  s(";X", t("\\Xi")),
-  s(";P", t("\\Pi")),
-  s(";S", t("\\Sigma")),
-  s(";F", t("\\Phi")),
-  s(";O", t("\\Omega")),
+  s({trig = ";a", snippetType = "autosnippet"}, t("\\alpha")),
+  s({trig = ";b", snippetType = "autosnippet"}, t("\\beta")),
+  s({trig = ";g", snippetType = "autosnippet"}, t("\\gamma")),
+  s({trig = ";d", snippetType = "autosnippet"}, t("\\delta")),
+  s({trig = ";e", snippetType = "autosnippet"}, t("\\epsilon")),
+  s({trig = ";z", snippetType = "autosnippet"}, t("\\zeta")),
+  s({trig = ";h", snippetType = "autosnippet"}, t("\\eta")),
+  s({trig = ";t", snippetType = "autosnippet"}, t("\\theta")),
+  s({trig = ";k", snippetType = "autosnippet"}, t("\\kappa")),
+  s({trig = ";l", snippetType = "autosnippet"}, t("\\lambda")),
+  s({trig = ";m", snippetType = "autosnippet"}, t("\\mu")),
+  s({trig = ";n", snippetType = "autosnippet"}, t("\\nu")),
+  s({trig = ";x", snippetType = "autosnippet"}, t("\\xi")),
+  s({trig = ";p", snippetType = "autosnippet"}, t("\\pi")),
+  s({trig = ";r", snippetType = "autosnippet"}, t("\\rho")),
+  s({trig = ";s", snippetType = "autosnippet"}, t("\\sigma")),
+  s({trig = ";f", snippetType = "autosnippet"}, t("\\phi")),
+  s({trig = ";c", snippetType = "autosnippet"}, t("\\chi")),
+  s({trig = ";o", snippetType = "autosnippet"}, t("\\omega")),
+  s({trig = ";D", snippetType = "autosnippet"}, t("\\Delta")),
+  s({trig = ";T", snippetType = "autosnippet"}, t("\\Theta")),
+  s({trig = ";L", snippetType = "autosnippet"}, t("\\Lambda")),
+  s({trig = ";X", snippetType = "autosnippet"}, t("\\Xi")),
+  s({trig = ";P", snippetType = "autosnippet"}, t("\\Pi")),
+  s({trig = ";S", snippetType = "autosnippet"}, t("\\Sigma")),
+  s({trig = ";F", snippetType = "autosnippet"}, t("\\Phi")),
+  s({trig = ";O", snippetType = "autosnippet"}, t("\\Omega")),
+  s({ trig = "([%a%d]+)//", regTrig = true, wordTrig = false, snippetType = "autosnippet"}, {
+    t("\\frac{"),
+    d(1, function(_, snip)
+      return sn(nil, { i(1, snip.captures[1]) })
+    end),
+    t("}{"),
+    i(2),
+    t("}"),
+  }),
+
+  -- Basic fraction snippet (e.g., type "//" to get \frac{}{})
+  s("//", {
+    t("\\frac{"),
+    i(1),
+    t("}{"),
+    i(2),
+    t("}"),
+  }),
 }
