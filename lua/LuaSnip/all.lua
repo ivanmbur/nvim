@@ -38,6 +38,7 @@ return {
   s({trig = ";f", snippetType = "autosnippet"}, t("\\phi")),
   s({trig = ";c", snippetType = "autosnippet"}, t("\\chi")),
   s({trig = ";o", snippetType = "autosnippet"}, t("\\omega")),
+  s({trig = ";w", snippetType = "autosnippet"}, t("\\psi")),
   s({trig = ";D", snippetType = "autosnippet"}, t("\\Delta")),
   s({trig = ";T", snippetType = "autosnippet"}, t("\\Theta")),
   s({trig = ";L", snippetType = "autosnippet"}, t("\\Lambda")),
