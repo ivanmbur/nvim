@@ -97,6 +97,7 @@ return {
                     { name = "luasnip" },
                     { name = "buffer" },
                     { name = "path" },
+                    { name = "copilot" }
                 })
             })
 
