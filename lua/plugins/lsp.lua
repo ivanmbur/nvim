@@ -128,15 +128,6 @@ return {
                     }),
                 matching = { disallow_symbol_nonprefix_matching = false },
             })
-            require('lspconfig').pyright.setup({
-                settings = {
-                    python = {
-                        analysis = {
-                            extraPaths = { "./modules" }
-                        }
-                    }
-                }
-            })
         end,
     },
 }
