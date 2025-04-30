@@ -16,13 +16,14 @@ return {
         config = function()
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab" },
+                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html" },
                 automatic_installation = true,
             })
 
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
             require("mason-lspconfig").setup_handlers {
+                
                 function(server_name)
                     local opts = {
                         capabilities = capabilities,
@@ -37,6 +38,16 @@ return {
                                 workspace = {
                                     library = vim.api.nvim_get_runtime_file("", true),
                                     checkThirdParty = false,
+                                },
+                            },
+                        }
+                    end
+
+                    if server_name == "pyright" then
+                        opts.settings = {
+                            python = {
+                                analysis = {
+                                    extraPaths = { "modules" }, -- <--- your extra folders
                                 },
                             },
                         }
