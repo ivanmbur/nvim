@@ -12,6 +12,7 @@ return {
             "L3MON4D3/LuaSnip",
             "saadparwaiz1/cmp_luasnip",
             "rafamadriz/friendly-snippets",
+            "hrsh7th/cmp-nvim-lsp-signature-help"
         },
         config = function()
             require("mason").setup()
@@ -108,7 +109,8 @@ return {
                     { name = "luasnip" },
                     { name = "buffer" },
                     { name = "path" },
-                    { name = "copilot" }
+                    { name = "copilot" },
+                    { name = "nvim_lsp_signature_help" }
                 })
             })
 
