@@ -24,7 +24,6 @@ return {
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
             require("mason-lspconfig").setup_handlers {
-                
                 function(server_name)
                     local opts = {
                         capabilities = capabilities,
@@ -82,27 +81,9 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
                     ["<C-n>"] = cmp.mapping.select_next_item(),
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if luasnip.expand_or_jumpable() then
-                            luasnip.expand_or_jump()
-                        elseif cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-
-                    -- For navigating snippets with <S-Tab> (backward)
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if luasnip.jumpable(-1) then
-                            luasnip.jump(-1)  -- Jump backward in the snippet
-                        else
-                            fallback()  -- Insert a tab character if no snippet is active
-                        end
-                    end, { "i", "s" }),
                 }),
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
