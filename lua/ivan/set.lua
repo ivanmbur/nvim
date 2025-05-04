@@ -21,5 +21,3 @@ vim.opt.scrolloff = 10
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
-
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
