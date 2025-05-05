@@ -1,6 +1,6 @@
 return {
     "folke/tokyonight.nvim",
     lazy = false,
-    priority = 1000,
+    priority = 1500,
     opts = {},
 }
