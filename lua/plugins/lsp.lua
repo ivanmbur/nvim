@@ -34,94 +34,80 @@ return {
                     },
                 }
             }
-                -- require("mason-lspconfig").setup_handlers {
-                --     function(server_name)
-                --         local opts = {
-                --             capabilities = capabilities,
-                --         }
-                --
-                --         if server_name == "lua_ls" then
-                --             opts.settings = {
-                --                 Lua = {
-                --                     diagnostics = {
-                --                         globals = { "vim" },
-                --                     },
-                --                     workspace = {
-                --                         library = vim.api.nvim_get_runtime_file("", true),
-                --                         checkThirdParty = false,
-                --                     },
-                --                 },
-                --             }
-                --         end
-                --
-                --         if server_name == "pyright" then
-                --             opts.settings = {
-                --                 python = {
-                --                     analysis = {
-                --                         extraPaths = { "modules" }, -- <--- your extra folders
-                --                     },
-                --                 },
-                --             }
-                --         end
-                --
-                --         require("lspconfig")[server_name].setup(opts)
-                --     end,
-                -- }
 
-                vim.diagnostic.config({
-                    virtual_text = true,
-                    signs = true,
-                    underline = true,
-                    update_in_insert = false,
-                    severity_sort = true,
+            vim.lsp.config["julials"] = {
+                capabilities = capabilities,
+                on_new_config = function(new_config, _)
+                    local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
+                    if require('lspconfig').util.path.is_file(julia) then
+                        new_config.cmd[1] = julia
+                    end
+                end
+            }
+
+            -- require('lspconfig').julials.setup{
+            --     on_new_config = function(new_config, _)
+            --         local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
+            --         if require('lspconfig').util.path.is_file(julia) then
+            --             new_config.cmd[1] = julia
+            --         end
+            --     end
+            -- }
+
+            vim.diagnostic.config({
+                virtual_text = true,
+                signs = true,
+                underline = true,
+                update_in_insert = false,
+                severity_sort = true,
+            })
+
+            -- nvim-cmp setup
+            local cmp = require("cmp")
+            local luasnip = require("luasnip")
+            require("luasnip.loaders.from_vscode").lazy_load()
+
+            cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end,
+                },
+                mapping = cmp.mapping.preset.insert({
+                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                    ["<C-e>"] = cmp.mapping.abort(),
+                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+                    ["<C-n>"] = cmp.mapping.select_next_item(),
+                    ["<C-p>"] = cmp.mapping.select_prev_item(),
+                }),
+                sources = cmp.config.sources({
+                    { name = "nvim_lsp" },
+                    { name = "luasnip" },
+                    { name = "buffer" },
+                    { name = "path" },
+                    { name = "copilot" },
+                    { name = "nvim_lsp_signature_help" }
                 })
+            })
 
-                    -- nvim-cmp setup
-                    local cmp = require("cmp")
-                    local luasnip = require("luasnip")
-                    require("luasnip.loaders.from_vscode").lazy_load()
+            cmp.setup.cmdline({ "/", "?" }, {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = "buffer" },
+                },
+            })
 
-                    cmp.setup({
-                        snippet = {
-                            expand = function(args)
-                                luasnip.lsp_expand(args.body)
-                            end,
-                        },
-                        mapping = cmp.mapping.preset.insert({
-                            ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                            ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                            ["<C-Space>"] = cmp.mapping.complete(),
-                            ["<C-e>"] = cmp.mapping.abort(),
-                            ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                            ["<C-n>"] = cmp.mapping.select_next_item(),
-                            ["<C-p>"] = cmp.mapping.select_prev_item(),
-                        }),
-                        sources = cmp.config.sources({
-                            { name = "nvim_lsp" },
-                            { name = "luasnip" },
-                            { name = "buffer" },
-                            { name = "path" },
-                            { name = "copilot" },
-                            { name = "nvim_lsp_signature_help" }
-                        })
-                    })
-
-                cmp.setup.cmdline({ "/", "?" }, {
-                    mapping = cmp.mapping.preset.cmdline(),
-                    sources = {
-                        { name = "buffer" },
-                    },
-                })
-
-                cmp.setup.cmdline(":", {
-                    mapping = cmp.mapping.preset.cmdline(),
-                    sources = cmp.config.sources({
-                        { name = "path" },
-                    }, {
-                            { name = "cmdline" },
-                        }),
-                    matching = { disallow_symbol_nonprefix_matching = false },
-                })
-            end,
-            },
-    }
+            cmp.setup.cmdline(":", {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    { name = "path" },
+                }, {
+                        { name = "cmdline" },
+                    }),
+                matching = { disallow_symbol_nonprefix_matching = false },
+            })
+        end,
+    },
+}
