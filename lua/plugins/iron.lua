@@ -17,7 +17,7 @@ return{
                         command = {"zsh"}
                     },
                     python = {
-                        command = { "ipython" },  -- or { "ipython", "--no-autoindent" }
+                        command = { "ipython", "--no-autoindent" },  -- or { "ipython", "--no-autoindent" }
                         format = common.bracketed_paste_python,
                         block_dividers = { "# %%", "#%%" },
                     }
@@ -32,7 +32,7 @@ return{
                 end,
                 -- How the repl window will be displayed
                 -- See below for more information
-                repl_open_cmd = view.right(40),
+                repl_open_cmd = view.split.vertical.rightbelow("%40"),
 
                 -- repl_open_cmd can also be an array-style table so that multiple 
                 -- repl_open_commands can be given.
