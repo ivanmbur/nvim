@@ -14,6 +14,11 @@ return {
       return "\\mathcal{" .. snip.captures[1] .. "}"
     end),
   }),
+  s({ trig = "b(%u)", regTrig = true, wordTrig = false, snippetType = "autosnippet"}, {
+    f(function(_, snip)
+      return "\\mathbb{" .. snip.captures[1] .. "}"
+    end),
+  }),
   s("bigeq", {
     t({ "\\begin{equation}", "    " }),
     i(1),

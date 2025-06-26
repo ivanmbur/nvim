@@ -17,7 +17,7 @@ return {
         config = function()
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html" },
+                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx" },
                 automatic_installation = true,
             })
 
@@ -29,7 +29,6 @@ return {
 
                     python = {
                         analysis = {
-                            extraPaths = { "modules" }, -- <--- your extra folders
                         },
                     },
                 }
