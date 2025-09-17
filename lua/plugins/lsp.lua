@@ -1,5 +1,8 @@
 return {
     {
+        "vigoux/ltex-ls.nvim"
+    },
+    {
         "neovim/nvim-lspconfig",
         dependencies = {
             "mason-org/mason.nvim",
@@ -17,7 +20,7 @@ return {
         config = function()
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx" },
+                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx"},
                 automatic_installation = true,
             })
 
@@ -44,14 +47,16 @@ return {
                 end
             }
 
-            -- require('lspconfig').julials.setup{
-            --     on_new_config = function(new_config, _)
-            --         local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
-            --         if require('lspconfig').util.path.is_file(julia) then
-            --             new_config.cmd[1] = julia
-            --         end
-            --     end
-            -- }
+            vim.lsp.config["ltex-ls"] = {
+                filetypes = { "latex", "tex", "bib", "markdown", "gitcommit", "text" },
+                settings = {
+                    ltex = {
+                        enabled = { "latex", "tex", "bib", "markdown", },
+                        language = "auto",
+                        additionalRules = { enablePickyRules = true },
+                    }
+                }
+            }
 
             vim.diagnostic.config({
                 virtual_text = true,
