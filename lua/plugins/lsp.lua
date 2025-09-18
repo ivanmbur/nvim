@@ -1,6 +1,6 @@
 return {
     {
-        "vigoux/ltex-ls.nvim"
+        "barreiroleo/ltex_extra.nvim",
     },
     {
         "neovim/nvim-lspconfig",
@@ -20,7 +20,7 @@ return {
         config = function()
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx"},
+                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx", "ltex_plus"},
                 automatic_installation = true,
             })
 
@@ -47,15 +47,22 @@ return {
                 end
             }
 
-            vim.lsp.config["ltex-ls"] = {
-                filetypes = { "latex", "tex", "bib", "markdown", "gitcommit", "text" },
+            vim.lsp.config["ltex_plus"] = {
+                on_attach = function()
+                    -- setup ltex_extra during on_attach
+                    require("ltex_extra").setup({
+                        load_langs = { "en-US" },
+                        -- save to .ltex dir
+                        path = ".ltex",
+                    })
+                end,
                 settings = {
                     ltex = {
-                        enabled = { "latex", "tex", "bib", "markdown", },
-                        language = "auto",
-                        additionalRules = { enablePickyRules = true },
-                    }
-                }
+                        checkFrequency = 'save',
+                        enabled = { 'markdown', 'plaintex', 'tex', 'latex' },
+                        language = 'en-US',       -- default language
+                    },
+                },
             }
 
             vim.diagnostic.config({
