@@ -17,10 +17,16 @@ return {
             "rafamadriz/friendly-snippets",
             "hrsh7th/cmp-nvim-lsp-signature-help"
         },
+
+        on_attach = function(_, bufnr)
+            local bufopts = { noremap = true, silent = true, buffer = bufnr }
+            -- other keybinds that use bufopts
+        end,
+
         config = function()
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx", "ltex_plus"},
+                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx", "ltex"},
                 automatic_installation = true,
             })
 
@@ -47,9 +53,11 @@ return {
                 end
             }
 
-            vim.lsp.config["ltex_plus"] = {
+            vim.lsp.config["ltex"] = {
                 on_attach = function()
                     -- setup ltex_extra during on_attach
+                    --
+                    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
                     require("ltex_extra").setup({
                         load_langs = { "en-US" },
                         -- save to .ltex dir
