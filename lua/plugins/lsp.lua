@@ -30,7 +30,21 @@ return {
                 automatic_installation = true,
             })
 
+            local lspconfig = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+            vim.lsp.config["wolfram_lsp"] = {
+                capabilities = capabilities,
+                filetypes = { "wolfram", "mma", "wl", "wls" },
+                -- The command to start the kernel in LSP mode
+                cmd = {
+                    "wolfram", "kernel",
+                    "-noinit", "-noprompt", "-nopaclet",
+                    "-noicon", "-nostartuppaclets",
+                    "-run", 'Needs["LSPServer`"];LSPServer`StartServer[]'
+                },
+                root_dir = lspconfig.util.root_pattern("project.wl", ".git", "script.wls"),
+            }
 
             vim.lsp.config["pyright"] = {
                 capabilities = capabilities,
