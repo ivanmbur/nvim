@@ -5,8 +5,8 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            "mason-org/mason.nvim",
-            "mason-org/mason-lspconfig.nvim",
+            -- "mason-org/mason.nvim",
+            -- "mason-org/mason-lspconfig.nvim",
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
@@ -24,11 +24,11 @@ return {
         end,
 
         config = function()
-            require("mason").setup()
-            require("mason-lspconfig").setup({
-                ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx", "ltex"},
-                automatic_installation = true,
-            })
+            -- require("mason").setup()
+            -- require("mason-lspconfig").setup({
+            --     ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx", "ltex"},
+            --     automatic_installation = true,
+            -- })
 
             local lspconfig = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -57,15 +57,16 @@ return {
                 }
             }
 
-            vim.lsp.config["julials"] = {
-                capabilities = capabilities,
-                on_new_config = function(new_config, _)
-                    local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
-                    if require('lspconfig').util.path.is_file(julia) then
-                        new_config.cmd[1] = julia
-                    end
-                end
-            }
+            -- vim.lsp.config["julials"] = {
+            --     capabilities = capabilities,
+            --     on_new_config = function(new_config, _)
+            --         local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
+            --         if require('lspconfig').util.path.is_file(julia) then
+            --             new_config.cmd[1] = julia
+            --         end
+            --     end
+            -- }
+            vim.lsp.enable('julials')
 
             vim.lsp.config["ltex"] = {
                 on_attach = function()
