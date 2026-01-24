@@ -46,16 +46,7 @@ return {
                 root_dir = lspconfig.util.root_pattern("project.wl", ".git", "script.wls"),
             }
 
-            vim.lsp.config["pyright"] = {
-                capabilities = capabilities,
-                settings = {
-
-                    python = {
-                        analysis = {
-                        },
-                    },
-                }
-            }
+            vim.lsp.enable('pyright')
 
             -- vim.lsp.config["julials"] = {
             --     capabilities = capabilities,

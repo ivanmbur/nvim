@@ -4,4 +4,4 @@ require("ivan.set")
 require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/LuaSnip/"})
 
 vim.o.background = "dark"
-vim.cmd("colorscheme kanagawa")
+vim.cmd("colorscheme catppuccin")
