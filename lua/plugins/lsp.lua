@@ -1,4 +1,5 @@
 return {
+    {"barreiroleo/ltex-extra.nvim"},
     {
         "neovim/nvim-lspconfig",
         dependencies = {
@@ -40,6 +41,7 @@ return {
             vim.lsp.config["ltex_plus"] = {
                 on_attach = function()
                     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+                    require("ltex_extra").setup()
                 end,
                 settings = {
                     ltex = {
