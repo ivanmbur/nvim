@@ -1,12 +1,7 @@
 return {
     {
-        "barreiroleo/ltex_extra.nvim",
-    },
-    {
         "neovim/nvim-lspconfig",
         dependencies = {
-            -- "mason-org/mason.nvim",
-            -- "mason-org/mason-lspconfig.nvim",
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
@@ -20,15 +15,9 @@ return {
 
         on_attach = function(_, bufnr)
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
-            -- other keybinds that use bufopts
         end,
 
         config = function()
-            -- require("mason").setup()
-            -- require("mason-lspconfig").setup({
-            --     ensure_installed = { "pyright", "lua_ls", "clangd", "julials", "texlab", "html", "lemminx", "ltex"},
-            --     automatic_installation = true,
-            -- })
 
             local lspconfig = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -47,28 +36,10 @@ return {
             }
 
             vim.lsp.enable('pyright')
-
-            -- vim.lsp.config["julials"] = {
-            --     capabilities = capabilities,
-            --     on_new_config = function(new_config, _)
-            --         local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
-            --         if require('lspconfig').util.path.is_file(julia) then
-            --             new_config.cmd[1] = julia
-            --         end
-            --     end
-            -- }
             vim.lsp.enable('julials')
-
-            vim.lsp.config["ltex"] = {
+            vim.lsp.config["ltex_plus"] = {
                 on_attach = function()
-                    -- setup ltex_extra during on_attach
-                    --
                     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
-                    require("ltex_extra").setup({
-                        load_langs = { "en-US" },
-                        -- save to .ltex dir
-                        path = ".ltex",
-                    })
                 end,
                 settings = {
                     ltex = {
@@ -78,6 +49,7 @@ return {
                     },
                 },
             }
+            vim.lsp.enable('ltex_plus')
 
             vim.diagnostic.config({
                 virtual_text = true,
