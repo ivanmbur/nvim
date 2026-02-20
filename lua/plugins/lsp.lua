@@ -52,6 +52,7 @@ return {
                 },
             }
             vim.lsp.enable('ltex_plus')
+            vim.lsp.enable('texlab')
 
             vim.diagnostic.config({
                 virtual_text = true,
@@ -86,7 +87,7 @@ return {
                     { name = "luasnip" },
                     { name = "buffer" },
                     { name = "path" },
-                    { name = "copilot" },
+                    -- { name = "copilot" },
                     { name = "nvim_lsp_signature_help" }
                 })
             })
